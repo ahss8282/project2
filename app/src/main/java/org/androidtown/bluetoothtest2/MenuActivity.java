@@ -19,15 +19,17 @@ public class MenuActivity extends Activity implements SelectDeviceDialogListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        mybtn=(Button)findViewById(R.id.mybtn);
+        mybtn=(Button)findViewById(R.id.mybtn); //버튼 조작을 위한 것
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter(); //어댑터 초기화
 
-
+        //버튼 클릭 시 동작설정 (onclick 안에만 보면 됨)
         mybtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+                //페어링 된 디바이스 목록 얻기
 
+                //디바이스 목록을 다이어로그 창에 추가
                 String[] pairedDeviceNames = new String[pairedDevices.size()];
                 int i = 0;
                 for(BluetoothDevice pairedDevice : pairedDevices) {
@@ -35,6 +37,7 @@ public class MenuActivity extends Activity implements SelectDeviceDialogListener
                     i++;
                 }
 
+                //다이얼로그 세팅 후 출력
                 SelectDeviceDialog selectDeviceDialog = SelectDeviceDialog.newInstance(pairedDeviceNames);
                 selectDeviceDialog.show(getFragmentManager(), "selectDeviceDialog");
             }

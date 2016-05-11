@@ -38,7 +38,7 @@ public class SelectDeviceDialog extends DialogFragment {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        //다이얼로그 내용 중 하나를 터치하면 어떤 기기인지 골라짐
                         selectDeviceDialogListener.onChoosingPairedDevice(pairedDevices[which]);
                     }
                 })
