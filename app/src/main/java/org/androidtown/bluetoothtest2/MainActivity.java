@@ -37,7 +37,9 @@ public class MainActivity extends Activity implements SelectDeviceDialogListener
 
     private Button bt1;
     private Button bt2;
+
     private Button ssbutton;
+    private Button searchBtn;
     private Menu actionsMenu;
 
     private final UUID SPP_UUID = java.util.UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -87,7 +89,11 @@ public class MainActivity extends Activity implements SelectDeviceDialogListener
                     Toast.LENGTH_SHORT).show();
             finish();
         }
+
+
     }
+
+
 
 
     @Override
@@ -121,6 +127,14 @@ public class MainActivity extends Activity implements SelectDeviceDialogListener
         bt2.setEnabled(false);
         ssbutton.setEnabled(false);
 
+        searchBtn = (Button)findViewById(R.id.searchBtn);
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,BluetoothActivity.class);
+                startActivity(intent);
+            }
+        });
         super.onPostCreate(savedInstanceState);
     }
 

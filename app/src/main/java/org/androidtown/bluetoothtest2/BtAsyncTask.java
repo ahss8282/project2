@@ -71,11 +71,11 @@ public class BtAsyncTask extends AsyncTask<Void, String, Void> {
 
     public void sendCommand(String command) {
 
-        try {
-            writer.write(command);
-            writer.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                writer.write(command);
+                writer.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
         }
     }
 

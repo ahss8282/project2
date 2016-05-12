@@ -11,4 +11,18 @@
         android:text="검색"
         android:id="@+id/button3"
         android:onClick="searchOnclick"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RButton"
+        android:id="@+id/Rbtn"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/SensorText"
+        />
 </LinearLayout>

@@ -39,6 +39,12 @@
         android:layout_height="202dp"
         android:orientation="vertical"
         android:weightSum="1">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="검색"
+            android:id="@+id/searchBtn"
+            />
 
         <TextView
             android:layout_width="match_parent"
