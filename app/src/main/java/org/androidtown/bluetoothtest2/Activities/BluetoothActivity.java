@@ -1,4 +1,4 @@
-package org.androidtown.bluetoothtest2;
+package org.androidtown.bluetoothtest2.Activities;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -20,6 +20,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import org.androidtown.bluetoothtest2.BtAsyncTask;
+import org.androidtown.bluetoothtest2.R;
 
 import java.io.IOException;
 import java.util.ArrayList;

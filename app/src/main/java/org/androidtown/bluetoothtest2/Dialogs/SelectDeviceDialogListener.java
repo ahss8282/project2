@@ -1,4 +1,4 @@
-package org.androidtown.bluetoothtest2;
+package org.androidtown.bluetoothtest2.Dialogs;
 
 /**
  * Created by 용구 on 2016-05-01.

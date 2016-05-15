@@ -1,4 +1,4 @@
-package org.androidtown.bluetoothtest2;
+package org.androidtown.bluetoothtest2.Activities;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -22,6 +22,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.androidtown.bluetoothtest2.BtAsyncTask;
+import org.androidtown.bluetoothtest2.R;
+import org.androidtown.bluetoothtest2.Dialogs.SelectDeviceDialog;
+import org.androidtown.bluetoothtest2.Dialogs.SelectDeviceDialogListener;
 
 import java.io.IOException;
 import java.util.Set;

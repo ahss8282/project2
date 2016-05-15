@@ -1,0 +1,87 @@
+package org.androidtown.bluetoothtest2.Adapters;
+
+import android.app.Activity;
+import android.bluetooth.BluetoothDevice;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import org.androidtown.bluetoothtest2.Entities.DeviceInfo;
+import org.androidtown.bluetoothtest2.R;
+
+import java.util.ArrayList;
+
+public class BluetoothListAdapter extends BaseAdapter {
+    private LayoutInflater mInflater;
+    private Activity mActivity;
+    private ArrayList<BluetoothDevice> devices;
+
+
+    public BluetoothListAdapter(Activity activity, ArrayList devices){
+        this.mActivity = activity;
+        this.devices = devices;
+
+        mInflater =(LayoutInflater)mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    @Override
+    public int getCount() {
+        return devices.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return devices.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        if(convertView ==null){
+            int res = 0;
+            res = R.layout.activity_bluetooth_list_adapter;
+            convertView = mInflater.inflate(res,parent,false);
+        }
+
+        TextView name = (TextView)convertView.findViewById(R.id.vi_title);
+        TextView address = (TextView)convertView.findViewById(R.id.vi_content);
+
+        LinearLayout layout_view =  (LinearLayout)convertView.findViewById(R.id.vi_view);
+
+        name.setText(devices.get(position).getName());
+        address.setText(devices.get(position).getAddress());
+
+        layout_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("TEXT",devices.get(position).getAddress());
+
+                BluetoothDevice bluetoothDevice = (BluetoothDevice)devices.get(position);
+                DeviceInfo info = new DeviceInfo(bluetoothDevice.getName(),bluetoothDevice.getAddress());
+
+                Bundle extras = new Bundle();
+
+                extras.putSerializable("deviceInfo",info);
+                Intent intent =new Intent();
+                intent.putExtras(extras);
+
+                mActivity.setResult(mActivity.RESULT_OK,intent);
+                mActivity.finish();
+            }
+        });
+
+
+        return convertView;
+    }
+}
