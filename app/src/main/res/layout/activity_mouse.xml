@@ -17,6 +17,18 @@
         android:text="LEFT"
         android:id="@+id/leftBtn" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RIGHT"
+        android:id="@+id/rightBtn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="cali_send"
+        android:id="@+id/calisend" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,20 +36,5 @@
         android:text=""
         android:id="@+id/sensorText"
         android:layout_gravity="bottom" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="RIGHT"
-        android:id="@+id/rightBtn" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-
-
-    </LinearLayout>
 
 </LinearLayout>
