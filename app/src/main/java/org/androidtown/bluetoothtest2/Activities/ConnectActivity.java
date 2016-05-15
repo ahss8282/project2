@@ -1,5 +1,6 @@
 package org.androidtown.bluetoothtest2.Activities;
 
+import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -7,7 +8,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.ListView;
 
@@ -60,7 +63,31 @@ public class ConnectActivity extends Activity {
             }
         };
 
+
         this.registerReceiver(mReceiver, bluetoothIntentFilter);
+
+        int hasPermission = ActivityCompat.checkSelfPermission(ConnectActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION);
+        Log.d("TEXT",hasPermission+"");
+
+
+        hasPermission = ActivityCompat.checkSelfPermission(ConnectActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
+        Log.d("TEXT",hasPermission+"");
+
+
+        ActivityCompat.requestPermissions(ConnectActivity.this,
+                new String[]{
+                        android.Manifest.permission.ACCESS_COARSE_LOCATION },
+                0);
+
+        ActivityCompat.requestPermissions(ConnectActivity.this,
+                new String[]{
+                        Manifest.permission.ACCESS_FINE_LOCATION },
+                0);
+
+        ActivityCompat.requestPermissions(ConnectActivity.this,
+                new String[]{
+                        android.Manifest.permission.BLUETOOTH_ADMIN },
+                0);
 
         if (bluetoothAdapter.isDiscovering()){
             bluetoothAdapter.cancelDiscovery();
@@ -92,6 +119,20 @@ public class ConnectActivity extends Activity {
 //            }
 //        });
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 0: {
+                if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("WOW","WOW");
+                } else {
+
+                }
+                return;
+            }
+        }
     }
 
     @Override

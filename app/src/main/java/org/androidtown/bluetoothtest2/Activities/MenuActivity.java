@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -73,6 +74,8 @@ public class MenuActivity extends Activity{
 
         super.onActivityResult(requestCode, resultCode, intent);
     }
+
+
 
     private void connectToDevice(BluetoothDevice device) {
 
