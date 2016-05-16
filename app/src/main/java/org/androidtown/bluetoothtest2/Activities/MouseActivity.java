@@ -105,7 +105,7 @@ public class MouseActivity extends Activity implements SensorEventListener {
                 ymean = mean(ycount);
                 xsd = standardDeviation(xcount, 1);
                 ysd = standardDeviation(ycount, 1);
-                btAsyncTask.sendCommand("calidata" + ","  + xmean + "," + ymean + "," + xsd + "," + ysd);// mean과 sd 보내기
+                btAsyncTask.sendCommand("calidata" + ","  + xsd + "," + ysd + "," + xmean + "," + ymean);// mean과 sd 보내기
                 flag = 1;
                 //count = 100;// flag 바꾸기
             }
