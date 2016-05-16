@@ -16,6 +16,7 @@ import android.widget.TextView;
 import org.androidtown.bluetoothtest2.Entities.DeviceInfo;
 import org.androidtown.bluetoothtest2.R;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class BluetoothListAdapter extends BaseAdapter {
@@ -69,6 +70,15 @@ public class BluetoothListAdapter extends BaseAdapter {
 
                 BluetoothDevice bluetoothDevice = (BluetoothDevice)devices.get(position);
                 DeviceInfo info = new DeviceInfo(bluetoothDevice.getName(),bluetoothDevice.getAddress());
+
+                //페어링안되어있으면 페어링을 시도한다
+                if(bluetoothDevice.getBondState() != bluetoothDevice.BOND_BONDED)
+                try {
+                    Method method = bluetoothDevice.getClass().getMethod("createBond", (Class[]) null);
+                    method.invoke(bluetoothDevice, (Object[]) null);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 Bundle extras = new Bundle();
 
