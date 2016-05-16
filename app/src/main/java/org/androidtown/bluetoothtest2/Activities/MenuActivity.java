@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +33,9 @@ public class MenuActivity extends Activity{
     private DeviceInfo targetDevice;
 
     private static final int CONNECT_ACTIVITY = 0;
+
+    private BroadcastReceiver mPairReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +64,38 @@ public class MenuActivity extends Activity{
             }
         });
 
+        mPairReceiver = new BroadcastReceiver() {
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+
+                if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action)) {
+                    final int state        = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.ERROR);
+                    final int prevState    = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, BluetoothDevice.ERROR);
+
+                    if (state == BluetoothDevice.BOND_BONDED && prevState == BluetoothDevice.BOND_BONDING) {
+                        Log.d("MENU","페어링됨");
+                        mouseBtn.setEnabled(true);
+                    } else if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDED){
+                        mouseBtn.setEnabled(false);
+                    }
+
+                }
+            }
+        };
+        IntentFilter paringFilter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+
+
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter(); //어댑터 초기화
+        this.registerReceiver(mPairReceiver, paringFilter);
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.unregisterReceiver(mPairReceiver);
     }
 
     @Override
@@ -68,8 +104,13 @@ public class MenuActivity extends Activity{
         // check if the result comes from the request to enable bluetooth
         if (requestCode == CONNECT_ACTIVITY)
             if (resultCode == RESULT_OK) {
-                mouseBtn.setEnabled(true);
                 targetDevice = (DeviceInfo)intent.getExtras().get("deviceInfo");
+
+                //선택한 기기가 이미 페어링되어 있으면
+                BluetoothDevice tempBT = mBluetoothAdapter.getRemoteDevice(targetDevice.getAddress());
+                if(tempBT.getBondState() == BluetoothDevice.BOND_BONDED){
+                    mouseBtn.setEnabled(true);
+                }
             }
 
         super.onActivityResult(requestCode, resultCode, intent);
