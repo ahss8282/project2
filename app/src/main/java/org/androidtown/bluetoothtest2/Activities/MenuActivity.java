@@ -46,8 +46,7 @@ public class MenuActivity extends Activity{
         @Override
         protected void onPreExecute() {
             asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            asyncDialog.setMessage("로딩중입니다..");
-
+            asyncDialog.setMessage("페어링 중..");
 
             mPairReceiver = new BroadcastReceiver() {
                 public void onReceive(Context context, Intent intent) {
@@ -63,7 +62,6 @@ public class MenuActivity extends Activity{
                         } else if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDED){
                             mouseBtn.setEnabled(false);
                         }
-
                     }
                 }
             };
