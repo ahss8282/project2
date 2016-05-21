@@ -170,7 +170,7 @@ public class MenuActivity extends Activity{
             if (resultCode == RESULT_OK) {
                 targetDevice = (DeviceInfo)intent.getExtras().get("deviceInfo");
 
-                connectBtn.setText("연결해제");
+                connectBtn.setText("기기선택 취소");
 
                 //선택한 기기가 이미 페어링되어 있으면
                 BluetoothDevice tempBT = mBluetoothAdapter.getRemoteDevice(targetDevice.getAddress());
@@ -190,41 +190,4 @@ public class MenuActivity extends Activity{
         super.onActivityResult(requestCode, resultCode, intent);
     }
 
-
-
-    private void connectToDevice(BluetoothDevice device) {
-
-        Log.d("MainActivity", "Enter connectToDevice()");
-
-        // Create a connection to the device with the SPP UUID
-        try {
-            btSocket = device.createInsecureRfcommSocketToServiceRecord(BluetoothConst.SPP_UUID);
-            Log.d("MainActivity", "InsecureRfCommSocket created");
-        } catch (IOException e) {
-            Log.d("MainActivity", "Unable to create InsecureRfCommSocket: " + e.getMessage());
-            Toast.makeText(this, "Unable to open a serial socket with the device", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Connect to the device
-        try {
-            btSocket.connect();
-            Log.d("MainActivity", "Socket connected");
-        } catch (IOException e) {
-            Log.d("MainActivity", "Unable to connect the socket: " + e.getMessage());
-            Toast.makeText(this, "Unable to connect to the device", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-
-
-        Log.d("MainActivity", "AsyncTask executed");
-        Log.d("MainActivity", "Exit connectToDevice()");
-    }
-
-
-//    @Override
-//    public void onChoosingPairedDevice(String deviceName) {
-//        Log.d("DEVICE INFO: ",deviceName);
-//    }
 }
