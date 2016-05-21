@@ -2,22 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFCCFF">
+    android:background="#FFCCFF"
+    android:weightSum="1">
 
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="71dp"
         android:layout_height="wrap_content"
         android:text="검색"
         android:id="@+id/button3"
-        android:onClick="searchOnclick"/>
+        android:onClick="searchOnclick"
+        android:layout_gravity="center_vertical" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="RButton"
         android:id="@+id/Rbtn"
-        />
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.82" />
 
     <TextView
         android:layout_width="wrap_content"

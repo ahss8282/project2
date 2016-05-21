@@ -31,6 +31,8 @@ public class MouseActivity extends Activity implements SensorEventListener {
 
     private Button leftBtn;
     private Button rightBtn;
+    private Button upWheelBtn;
+    private Button downWheelBtn;
     private Button calisend;
 
     /****sensor variable****/
@@ -78,8 +80,11 @@ public class MouseActivity extends Activity implements SensorEventListener {
         sensorText = (TextView)findViewById(R.id.sensorText);
         leftBtn = (Button)findViewById(R.id.leftBtn);
         rightBtn = (Button)findViewById(R.id.rightBtn);
+        upWheelBtn = (Button)findViewById(R.id.upBtn);
+        downWheelBtn = (Button)findViewById(R.id.downBtn);;
         calisend = (Button)findViewById(R.id.calisend);
-
+        leftBtn.setBackgroundColor(1);
+        rightBtn.setBackgroundColor(1);
         leftBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,11 +110,28 @@ public class MouseActivity extends Activity implements SensorEventListener {
                 ymean = mean(ycount);
                 xsd = standardDeviation(xcount, 1);
                 ysd = standardDeviation(ycount, 1);
-                btAsyncTask.sendCommand("calidata" + ","  + xsd + "," + ysd + "," + xmean + "," + ymean);// mean과 sd 보내기
+                btAsyncTask.sendCommand("calidata" + "," + xsd + "," + ysd + "," + xmean + "," + ymean);// mean과 sd 보내기
                 flag = 1;
                 //count = 100;// flag 바꾸기
             }
         });
+
+        upWheelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("MOUSE", "UP");
+                btAsyncTask.sendCommand("upwheel");
+            }
+        });
+        downWheelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("MOUSE", "down");
+                btAsyncTask.sendCommand("downwheel");
+            }
+        });
+
+
 
         //레이아웃 관련 설정 끝
 

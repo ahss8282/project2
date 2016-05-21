@@ -11,14 +11,23 @@
     android:weightSum="1"
     android:background="#FFCCFF">
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+
+    >
+
 
     <Button
+        android:background="#FFCCFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="LEFT"
         android:id="@+id/leftBtn" />
 
     <Button
+        android:background="#FFCCFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="RIGHT"
@@ -37,5 +46,19 @@
         android:text=""
         android:id="@+id/sensorText"
         android:layout_gravity="bottom" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="up"
+        android:id="@+id/upBtn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="down"
+        android:id="@+id/downBtn" />
+
+</LinearLayout>
 
 </LinearLayout>
