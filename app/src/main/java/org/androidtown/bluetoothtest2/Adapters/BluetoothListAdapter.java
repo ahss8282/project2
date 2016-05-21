@@ -1,9 +1,11 @@
 package org.androidtown.bluetoothtest2.Adapters;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import org.androidtown.bluetoothtest2.Entities.DeviceInfo;
 import org.androidtown.bluetoothtest2.R;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
@@ -23,6 +26,8 @@ public class BluetoothListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private Activity mActivity;
     private ArrayList<BluetoothDevice> devices;
+
+
 
 
     public BluetoothListAdapter(Activity activity, ArrayList devices){

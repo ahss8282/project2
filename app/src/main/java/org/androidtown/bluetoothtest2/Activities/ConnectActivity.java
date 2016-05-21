@@ -19,6 +19,7 @@ import org.androidtown.bluetoothtest2.Entities.DeviceInfo;
 import org.androidtown.bluetoothtest2.R;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 public class ConnectActivity extends Activity {
     private BluetoothAdapter bluetoothAdapter;
@@ -94,6 +95,7 @@ public class ConnectActivity extends Activity {
         }
         //re-start discovery
         bluetoothAdapter.startDiscovery();
+        setDeviceList();
         setList();
     }
 
@@ -121,12 +123,22 @@ public class ConnectActivity extends Activity {
 
     }
 
+    private void setDeviceList(){
+        Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+
+        String[] pairedDeviceNames = new String[pairedDevices.size()];
+        int i = 0;
+        for(BluetoothDevice pairedDevice : pairedDevices) {
+            deviceList.add(pairedDevice);
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case 0: {
                 if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.d("WOW","WOW");
+
                 } else {
 
                 }

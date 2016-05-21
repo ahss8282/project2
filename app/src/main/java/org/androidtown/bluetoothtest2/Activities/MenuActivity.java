@@ -1,6 +1,7 @@
 package org.androidtown.bluetoothtest2.Activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -9,7 +10,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,8 +36,64 @@ public class MenuActivity extends Activity{
     private DeviceInfo targetDevice;
 
     private static final int CONNECT_ACTIVITY = 0;
-
     private BroadcastReceiver mPairReceiver;
+
+
+    private class CheckTypesTask extends AsyncTask<Void, Void, Void> {
+
+        private ProgressDialog asyncDialog = new ProgressDialog(MenuActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("로딩중입니다..");
+
+
+            mPairReceiver = new BroadcastReceiver() {
+                public void onReceive(Context context, Intent intent) {
+                    String action = intent.getAction();
+
+                    if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action)) {
+                        final int state        = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.ERROR);
+                        final int prevState    = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, BluetoothDevice.ERROR);
+
+                        if (state == BluetoothDevice.BOND_BONDED && prevState == BluetoothDevice.BOND_BONDING) {
+                            mouseBtn.setEnabled(true);
+
+                        } else if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDED){
+                            mouseBtn.setEnabled(false);
+                        }
+
+                    }
+                }
+            };
+            IntentFilter paringFilter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+            MenuActivity.this.registerReceiver(mPairReceiver, paringFilter);
+
+            // show dialog
+            asyncDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            try {
+                Thread.sleep(5000);
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            asyncDialog.dismiss();
+            super.onPostExecute(result);
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,30 +123,29 @@ public class MenuActivity extends Activity{
             }
         });
 
-        mPairReceiver = new BroadcastReceiver() {
-            public void onReceive(Context context, Intent intent) {
-                String action = intent.getAction();
 
-                if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action)) {
-                    final int state        = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.ERROR);
-                    final int prevState    = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, BluetoothDevice.ERROR);
-
-                    if (state == BluetoothDevice.BOND_BONDED && prevState == BluetoothDevice.BOND_BONDING) {
-                        Log.d("MENU","페어링됨");
-                        mouseBtn.setEnabled(true);
-                    } else if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDED){
-                        mouseBtn.setEnabled(false);
-                    }
-
-                }
-            }
-        };
-        IntentFilter paringFilter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
-
-
+//        mPairReceiver = new BroadcastReceiver() {
+//            public void onReceive(Context context, Intent intent) {
+//                String action = intent.getAction();
+//
+//                if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action)) {
+//                    final int state        = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.ERROR);
+//                    final int prevState    = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, BluetoothDevice.ERROR);
+//
+//                    if (state == BluetoothDevice.BOND_BONDED && prevState == BluetoothDevice.BOND_BONDING) {
+//                        mouseBtn.setEnabled(true);
+//
+//                    } else if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDED){
+//                        mouseBtn.setEnabled(false);
+//                    }
+//
+//                }
+//            }
+//        };
+//        IntentFilter paringFilter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter(); //어댑터 초기화
-        this.registerReceiver(mPairReceiver, paringFilter);
+//        this.registerReceiver(mPairReceiver, paringFilter);
 
 
     }
@@ -110,6 +168,10 @@ public class MenuActivity extends Activity{
                 BluetoothDevice tempBT = mBluetoothAdapter.getRemoteDevice(targetDevice.getAddress());
                 if(tempBT.getBondState() == BluetoothDevice.BOND_BONDED){
                     mouseBtn.setEnabled(true);
+                }
+                else{
+                    CheckTypesTask task = new CheckTypesTask();
+                    task.execute();
                 }
             }
 
