@@ -62,11 +62,13 @@ public class BluetoothListAdapter extends BaseAdapter {
 
         TextView name = (TextView)convertView.findViewById(R.id.vi_title);
         TextView address = (TextView)convertView.findViewById(R.id.vi_content);
+        TextView isPaired =(TextView)convertView.findViewById(R.id.vi_paired);
 
         LinearLayout layout_view =  (LinearLayout)convertView.findViewById(R.id.vi_view);
 
         name.setText(devices.get(position).getName());
         address.setText(devices.get(position).getAddress());
+        isPaired.setText(devices.get(position).getBondState()+"");
 
         layout_view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +76,7 @@ public class BluetoothListAdapter extends BaseAdapter {
                 Log.d("TEXT",devices.get(position).getAddress());
 
                 BluetoothDevice bluetoothDevice = (BluetoothDevice)devices.get(position);
-                DeviceInfo info = new DeviceInfo(bluetoothDevice.getName(),bluetoothDevice.getAddress());
+                DeviceInfo info = new DeviceInfo(bluetoothDevice.getName(),bluetoothDevice.getAddress(),bluetoothDevice.getBondState());
 
                 //페어링안되어있으면 페어링을 시도한다
                 if(bluetoothDevice.getBondState() != bluetoothDevice.BOND_BONDED)

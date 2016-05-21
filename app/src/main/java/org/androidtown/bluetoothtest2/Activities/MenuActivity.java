@@ -38,6 +38,7 @@ public class MenuActivity extends Activity{
     private static final int CONNECT_ACTIVITY = 0;
     private BroadcastReceiver mPairReceiver;
 
+    private Boolean isSelected = false;
 
     private class CheckTypesTask extends AsyncTask<Void, Void, Void> {
 
@@ -104,8 +105,15 @@ public class MenuActivity extends Activity{
         connectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this,ConnectActivity.class);
-                startActivityForResult(intent,CONNECT_ACTIVITY);
+                if(!isSelected) {
+                    Intent intent = new Intent(MenuActivity.this, ConnectActivity.class);
+                    startActivityForResult(intent, CONNECT_ACTIVITY);
+                }
+                else{
+                    connectBtn.setText("기기선택");
+                    mouseBtn.setEnabled(false);
+                    isSelected=false;
+                }
             }
         });
 
@@ -162,15 +170,21 @@ public class MenuActivity extends Activity{
             if (resultCode == RESULT_OK) {
                 targetDevice = (DeviceInfo)intent.getExtras().get("deviceInfo");
 
+                connectBtn.setText("연결해제");
+
                 //선택한 기기가 이미 페어링되어 있으면
                 BluetoothDevice tempBT = mBluetoothAdapter.getRemoteDevice(targetDevice.getAddress());
                 if(tempBT.getBondState() == BluetoothDevice.BOND_BONDED){
                     mouseBtn.setEnabled(true);
+                    isSelected = true;
                 }
                 else{
                     CheckTypesTask task = new CheckTypesTask();
                     task.execute();
+                    isSelected = true;
                 }
+
+
             }
 
         super.onActivityResult(requestCode, resultCode, intent);
@@ -207,9 +221,6 @@ public class MenuActivity extends Activity{
         Log.d("MainActivity", "AsyncTask executed");
         Log.d("MainActivity", "Exit connectToDevice()");
     }
-
-
-
 
 
 //    @Override
