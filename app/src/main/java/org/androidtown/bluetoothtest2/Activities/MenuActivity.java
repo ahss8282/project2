@@ -9,20 +9,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import org.androidtown.bluetoothtest2.Constants.BluetoothConst;
 import org.androidtown.bluetoothtest2.Entities.DeviceInfo;
 import org.androidtown.bluetoothtest2.R;
-
-import java.io.IOException;
 
 public class MenuActivity extends Activity{
     private BluetoothSocket btSocket; //블루투스 소켓
@@ -123,7 +116,7 @@ public class MenuActivity extends Activity{
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("targetDevice",targetDevice);
 
-                Intent intent = new Intent(MenuActivity.this,MouseActivity.class);
+                Intent intent = new Intent(MenuActivity.this,CalActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -188,6 +181,15 @@ public class MenuActivity extends Activity{
             }
 
         super.onActivityResult(requestCode, resultCode, intent);
+    }
+
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        moveTaskToBack(true);
+        finish();
+        android.os.Process.killProcess(android.os.Process.myPid());
+
     }
 
 }
