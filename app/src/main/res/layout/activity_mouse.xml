@@ -36,8 +36,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="cali_send"
-        android:id="@+id/calisend" />
+        android:text="Start"
+        android:id="@+id/startButton" />
 
     <TextView
         android:layout_width="wrap_content"

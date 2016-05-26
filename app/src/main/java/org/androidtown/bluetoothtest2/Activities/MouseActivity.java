@@ -28,12 +28,13 @@ public class MouseActivity extends Activity implements SensorEventListener {
     private BluetoothSocket btSocket;
     private BluetoothAdapter btAdapter;
     private DeviceInfo targetDevice;
+    private String reccalidata;
 
     private Button leftBtn;
     private Button rightBtn;
     private Button upWheelBtn;
     private Button downWheelBtn;
-    private Button calisend;
+    private Button startButton;
 
     /****sensor variable****/
     private long lastTime;
@@ -42,22 +43,19 @@ public class MouseActivity extends Activity implements SensorEventListener {
     private float lastY;
     private float lastZ;
     private float x, y, z;
-    private double xsd, ysd;
-    private double xmean, ymean;
-    private int flag = 0;
+    private int flag = -1;
     private int count = 0;
 
     private static final int SHAKE_THRESHOLD = 800;
     private static final int DATA_X = 0;
     private static final int DATA_Y = 1;
     private static final int DATA_Z = 2;
-    private double xcount[] = new double[50];
-    private double ycount[] = new double[50];
 
     private SensorManager sensorManager;
     private Sensor accelerormeterSensor;
     private TextView sensorText;
     private boolean bool = false;
+    private boolean startBool = false;
     /****sensor variable****/
 
     @Override
@@ -82,7 +80,7 @@ public class MouseActivity extends Activity implements SensorEventListener {
         rightBtn = (Button)findViewById(R.id.rightBtn);
         upWheelBtn = (Button)findViewById(R.id.upBtn);
         downWheelBtn = (Button)findViewById(R.id.downBtn);;
-        calisend = (Button)findViewById(R.id.calisend);
+        startButton = (Button)findViewById(R.id.startButton);
         leftBtn.setBackgroundColor(1);
         rightBtn.setBackgroundColor(1);
         leftBtn.setOnClickListener(new View.OnClickListener() {
@@ -101,18 +99,18 @@ public class MouseActivity extends Activity implements SensorEventListener {
             }
         });
 
-        calisend.setOnClickListener(new View.OnClickListener(){
+        startButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Log.d("Calibrate data", "send");
 
-                xmean = mean(xcount);
-                ymean = mean(ycount);
-                xsd = standardDeviation(xcount, 1);
-                ysd = standardDeviation(ycount, 1);
-                btAsyncTask.sendCommand("calidata" + "," + xsd + "," + ysd + "," + xmean + "," + ymean);// mean과 sd 보내기
-                flag = 1;
-                //count = 100;// flag 바꾸기
+                if(startBool == false){
+                    btAsyncTask.sendCommand(reccalidata);
+                    startBool = true; // 첫 클릭이면 calidata를 보낸다.
+                }
+
+                flag = flag * -1;
+
             }
         });
 
@@ -136,6 +134,7 @@ public class MouseActivity extends Activity implements SensorEventListener {
         //레이아웃 관련 설정 끝
 
         targetDevice = (DeviceInfo)this.getIntent().getExtras().get("targetDevice");
+        reccalidata = (String)this.getIntent().getExtras().get("caliData"); // 같이 가져온 calidata 풀기
 
         Log.d("MOUSE",targetDevice.getAddress());
         Log.d("MOUSE",targetDevice.getName());
@@ -220,19 +219,6 @@ public class MouseActivity extends Activity implements SensorEventListener {
             long currentTime = System.currentTimeMillis();
             long gabOfTime = (currentTime - lastTime);
             if (gabOfTime > 100) {
-                lastTime = currentTime;
-                x = event.values[0];
-                y = event.values[1];
-                //z = event.values[2];
-
-                if(count < 50){
-                    xcount[count] = event.values[0];
-                    ycount[count] = event.values[1];
-                    count++;
-                }
-                else{
-                    count = 100;
-                }
 
                 speed = Math.abs(x + y + z - lastX - lastY - lastZ) / gabOfTime * 10000;
                 //흔들림의 정도에따라 이벤트를 넣게됨
@@ -244,41 +230,13 @@ public class MouseActivity extends Activity implements SensorEventListener {
                 lastY = event.values[DATA_Y];
                 //lastZ = event.values[DATA_Z];
                 //sensorText.setText(String.valueOf(event.values[0]) + "," + String.valueOf(event.values[1]) + "," + String.valueOf(event.values[2]));
-                sensorText.setText(String.valueOf(event.values[0]) + "," + String.valueOf(event.values[1]));
+                sensorText.setText(String.valueOf(event.values[0]) + "," + String.valueOf(event.values[1] + ","));
                 if (btAsyncTask != null && flag == 1){
                     btAsyncTask.sendCommand(sensorText.getText().toString());
                 }
             }
         }
     }
-
-    public static double mean(double[] array) {  // 산술 평균 구하기
-        double sum = 0.0;
-
-        for (int i = 0; i < array.length; i++)
-            sum += array[i];
-
-        return sum / array.length;
-    }
-
-
-    public static double standardDeviation(double[] array, int option) {
-        if (array.length < 2) return Double.NaN;
-
-        double sum = 0.0;
-        double sd = 0.0;
-        double diff;
-        double meanValue = mean(array);
-
-        for (int i = 0; i < array.length; i++) {
-            diff = array[i] - meanValue;
-            sum += diff * diff;
-        }
-        sd = Math.sqrt(sum / (array.length - option));
-
-        return sd;
-    }
-
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
