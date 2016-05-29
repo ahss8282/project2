@@ -9,56 +9,68 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Activities.MouseActivity"
     android:weightSum="1"
-    android:background="#FFCCFF">
+    android:background="@drawable/mouse">
 
-<LinearLayout
+<RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
 
     >
 
 
     <Button
-        android:background="#FFCCFF"
+        android:background="#e8e8e8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="LEFT"
-        android:id="@+id/leftBtn" />
+        android:id="@+id/leftBtn"
+        android:layout_alignTop="@+id/downBtn"
+        android:layout_toRightOf="@+id/upBtn"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
-        android:background="#FFCCFF"
+        android:background="#e8e8e8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="RIGHT"
-        android:id="@+id/rightBtn" />
+        android:id="@+id/rightBtn"
+        android:layout_alignTop="@+id/leftBtn"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/upBtn"
+        android:layout_toStartOf="@+id/upBtn" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start"
-        android:id="@+id/startButton" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text=""
-        android:id="@+id/sensorText"
-        android:layout_gravity="bottom" />
+        android:id="@+id/startButton"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="up"
-        android:id="@+id/upBtn" />
+        android:id="@+id/upBtn"
+        android:background="#e8e8e8"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/startButton"
+        android:layout_alignStart="@+id/startButton" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="down"
-        android:id="@+id/downBtn" />
+        android:id="@+id/downBtn"
+        android:background="#e8e8e8"
+        android:layout_above="@+id/upBtn"
+        android:layout_alignLeft="@+id/startButton" />
 
-</LinearLayout>
+</RelativeLayout>
 
 </LinearLayout>

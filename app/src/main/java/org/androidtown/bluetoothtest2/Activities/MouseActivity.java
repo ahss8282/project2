@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.androidtown.bluetoothtest2.BtAsyncTask;
@@ -51,9 +50,11 @@ public class MouseActivity extends Activity implements SensorEventListener {
     private static final int DATA_Y = 1;
     private static final int DATA_Z = 2;
 
+    private String sensormessage;
+
     private SensorManager sensorManager;
     private Sensor accelerormeterSensor;
-    private TextView sensorText;
+    //private TextView sensorText;
     private boolean bool = false;
     private boolean startBool = false;
     /****sensor variable****/
@@ -75,7 +76,7 @@ public class MouseActivity extends Activity implements SensorEventListener {
         btAdapter = BluetoothAdapter.getDefaultAdapter();
 
         //레이아웃 관련 설정
-        sensorText = (TextView)findViewById(R.id.sensorText);
+        //sensorText = (TextView)findViewById(R.id.sensorText);
         leftBtn = (Button)findViewById(R.id.leftBtn);
         rightBtn = (Button)findViewById(R.id.rightBtn);
         upWheelBtn = (Button)findViewById(R.id.upBtn);
@@ -230,9 +231,10 @@ public class MouseActivity extends Activity implements SensorEventListener {
                 lastY = event.values[DATA_Y];
                 //lastZ = event.values[DATA_Z];
                 //sensorText.setText(String.valueOf(event.values[0]) + "," + String.valueOf(event.values[1]) + "," + String.valueOf(event.values[2]));
-                sensorText.setText(String.valueOf(event.values[0]) + "," + String.valueOf(event.values[1] + ","));
+                //sensorText.setText(String.valueOf(event.values[0]) + "," + String.valueOf(event.values[1] + ","));
+                sensormessage = String.valueOf(event.values[0]) + "," + String.valueOf(event.values[1] + ",");
                 if (btAsyncTask != null && flag == 1){
-                    btAsyncTask.sendCommand(sensorText.getText().toString());
+                    btAsyncTask.sendCommand(sensormessage);
                 }
             }
         }
