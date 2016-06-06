@@ -71,6 +71,77 @@
         android:layout_above="@+id/upBtn"
         android:layout_alignLeft="@+id/startButton" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MC.start"
+        android:id="@+id/MCstart"
+        android:layout_alignTop="@+id/MCstop"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MC.stop"
+        android:id="@+id/MCstop"
+        android:layout_below="@+id/startButton"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MC.delete"
+        android:id="@+id/MCdelete"
+        android:layout_above="@+id/MRstop"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MR.start"
+        android:id="@+id/MRstart"
+        android:layout_below="@+id/MCstart"
+        android:layout_alignLeft="@+id/MCstart"
+        android:layout_alignStart="@+id/MCstart" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MR.stop"
+        android:id="@+id/MRstop"
+        android:layout_below="@+id/MCstop"
+        android:layout_alignLeft="@+id/MCdelete"
+        android:layout_alignStart="@+id/MCdelete"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/LRelease"
+        android:layout_alignBaseline="@+id/LPress"
+        android:layout_alignBottom="@+id/LPress"
+        android:layout_toLeftOf="@+id/LPress"
+        android:layout_toStartOf="@+id/LPress"
+        android:background="#e8e8e8"
+        android:text="--"
+        android:textColor="#f2f2f2f2" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/LPress"
+        android:layout_above="@+id/leftBtn"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="#e8e8e8"
+        android:text="--"
+        android:textColor="#f2f2f2f2" />
+
 </RelativeLayout>
 
 </LinearLayout>

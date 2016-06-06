@@ -34,6 +34,16 @@ public class MouseActivity extends Activity implements SensorEventListener {
     private Button upWheelBtn;
     private Button downWheelBtn;
     private Button startButton;
+    /******0606추가*******/
+    private Button MCstart;
+    private Button MCstop;
+    private Button MCdelete;
+    private Button MRstart;
+    private Button MRstop;
+    private Button LRelease;
+    private Button LPress;
+    /*********************/
+
 
     /****sensor variable****/
     private long lastTime;
@@ -69,7 +79,7 @@ public class MouseActivity extends Activity implements SensorEventListener {
         accelerormeterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         if (accelerormeterSensor != null){
-            sensorManager.registerListener(this, accelerormeterSensor, SensorManager.SENSOR_DELAY_UI);
+            sensorManager.registerListener(this, accelerormeterSensor, SensorManager.SENSOR_DELAY_FASTEST);
         }
         //센서등록 끝
 
@@ -82,8 +92,78 @@ public class MouseActivity extends Activity implements SensorEventListener {
         upWheelBtn = (Button)findViewById(R.id.upBtn);
         downWheelBtn = (Button)findViewById(R.id.downBtn);;
         startButton = (Button)findViewById(R.id.startButton);
+        //
+        MCstart = (Button)findViewById(R.id.MCstart);
+        MCdelete = (Button)findViewById(R.id.MCdelete);
+        MCstop = (Button)findViewById(R.id.MCstop);
+        MRstart = (Button)findViewById(R.id.MRstart);
+        MRstop = (Button)findViewById(R.id.MRstop);
+        LRelease = (Button)findViewById(R.id.LRelease);
+        LPress = (Button)findViewById(R.id.LPress);
+        //
+        LPress.setBackgroundColor(1);
+        LRelease.setBackgroundColor(1);
         leftBtn.setBackgroundColor(1);
         rightBtn.setBackgroundColor(1);
+
+        ///////
+        MCstart.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.d("MOUSE", "MCSTART");
+                btAsyncTask.sendCommand("mcrestart");
+            }
+        });
+
+        MCstop.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.d("MOUSE", "MCSTOP");
+                btAsyncTask.sendCommand("mcrestop");
+            }
+        });
+
+        MCdelete.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.d("MOUSE", "MCDELETE");
+                btAsyncTask.sendCommand("mdelete");
+            }
+        });
+
+        MRstop.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.d("MOUSE", "MRSTOP");
+                btAsyncTask.sendCommand("mrunstop");
+            }
+        });
+
+        MRstart.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.d("MOUSE", "MRSTART");
+                btAsyncTask.sendCommand("mrunstart");
+            }
+        });
+
+        LPress.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.d("MOUSE", "LPRESS");
+                btAsyncTask.sendCommand("lpress");
+            }
+        });
+
+        LRelease.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.d("MOUSE", "LRELEASE");
+                btAsyncTask.sendCommand("lrelease");
+            }
+        });
+
+        ///////
         leftBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -219,7 +299,7 @@ public class MouseActivity extends Activity implements SensorEventListener {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             long currentTime = System.currentTimeMillis();
             long gabOfTime = (currentTime - lastTime);
-            if (gabOfTime > 100) {
+            if (gabOfTime > 1000) {
 
                 speed = Math.abs(x + y + z - lastX - lastY - lastZ) / gabOfTime * 10000;
                 //흔들림의 정도에따라 이벤트를 넣게됨

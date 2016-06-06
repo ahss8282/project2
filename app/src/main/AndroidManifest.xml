@@ -32,8 +32,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.BluetoothActivity" />
-        <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.ConnectActivity" />
         <activity android:name=".Activities.MouseActivity" />
         <activity android:name=".Activities.MenuActivity" />
