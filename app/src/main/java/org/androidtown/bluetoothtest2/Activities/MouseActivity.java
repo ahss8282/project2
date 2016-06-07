@@ -111,7 +111,7 @@ public class MouseActivity extends Activity implements SensorEventListener {
             @Override
             public void onClick(View v) {
                 Log.d("MOUSE", "MCSTART");
-                btAsyncTask.sendCommand("mcrestart");
+                btAsyncTask.sendCommand("mcrestart,");
             }
         });
 
@@ -119,7 +119,7 @@ public class MouseActivity extends Activity implements SensorEventListener {
             @Override
             public void onClick(View v) {
                 Log.d("MOUSE", "MCSTOP");
-                btAsyncTask.sendCommand("mcrestop");
+                btAsyncTask.sendCommand("mcrestop,");
             }
         });
 
@@ -127,7 +127,7 @@ public class MouseActivity extends Activity implements SensorEventListener {
             @Override
             public void onClick(View v) {
                 Log.d("MOUSE", "MCDELETE");
-                btAsyncTask.sendCommand("mdelete");
+                btAsyncTask.sendCommand("mdelete,");
             }
         });
 
@@ -135,7 +135,7 @@ public class MouseActivity extends Activity implements SensorEventListener {
             @Override
             public void onClick(View v) {
                 Log.d("MOUSE", "MRSTOP");
-                btAsyncTask.sendCommand("mrunstop");
+                btAsyncTask.sendCommand("mrunstop,");
             }
         });
 
@@ -143,7 +143,7 @@ public class MouseActivity extends Activity implements SensorEventListener {
             @Override
             public void onClick(View v) {
                 Log.d("MOUSE", "MRSTART");
-                btAsyncTask.sendCommand("mrunstart");
+                btAsyncTask.sendCommand("mrunstart,");
             }
         });
 
@@ -151,7 +151,7 @@ public class MouseActivity extends Activity implements SensorEventListener {
             @Override
             public void onClick(View v) {
                 Log.d("MOUSE", "LPRESS");
-                btAsyncTask.sendCommand("lpress");
+                btAsyncTask.sendCommand("lpress,");
             }
         });
 
@@ -159,7 +159,7 @@ public class MouseActivity extends Activity implements SensorEventListener {
             @Override
             public void onClick(View v) {
                 Log.d("MOUSE", "LRELEASE");
-                btAsyncTask.sendCommand("lrelease");
+                btAsyncTask.sendCommand("lrelease,");
             }
         });
 
@@ -168,7 +168,7 @@ public class MouseActivity extends Activity implements SensorEventListener {
             @Override
             public void onClick(View v) {
                 Log.d("MOUSE","LEFT");
-                btAsyncTask.sendCommand("lclick");
+                btAsyncTask.sendCommand("lclick,");
             }
         });
 
@@ -176,7 +176,7 @@ public class MouseActivity extends Activity implements SensorEventListener {
             @Override
             public void onClick(View v) {
                 Log.d("MOUSE","RIGHT");
-                btAsyncTask.sendCommand("rclick");
+                btAsyncTask.sendCommand("rclick,");
             }
         });
 
@@ -199,14 +199,14 @@ public class MouseActivity extends Activity implements SensorEventListener {
             @Override
             public void onClick(View v) {
                 Log.d("MOUSE", "UP");
-                btAsyncTask.sendCommand("upwheel");
+                btAsyncTask.sendCommand("upwheel,");
             }
         });
         downWheelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("MOUSE", "down");
-                btAsyncTask.sendCommand("downwheel");
+                btAsyncTask.sendCommand("downwheel,");
             }
         });
 

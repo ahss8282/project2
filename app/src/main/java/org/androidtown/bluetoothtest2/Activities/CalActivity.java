@@ -74,7 +74,7 @@ public class CalActivity extends Activity implements SensorEventListener {
                     ymean = mean(ycount);
                     xsd = standardDeviation(xcount, 1);
                     ysd = standardDeviation(ycount, 1);
-                    sendData = "calidata" + "," + xsd + "," + ysd + "," + xmean + "," + ymean;
+                    sendData = "calidata" + "," + xsd + "," + ysd + "," + xmean + "," + ymean + ",";
 
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("targetDevice", targetDevice);
